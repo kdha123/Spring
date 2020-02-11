@@ -1,4 +1,4 @@
-# Spring Framework
+# Spring Framework (Java library)
 + **개발환경**
 1. **JAVA 8** -> JDK 1.8 : javac 포함
     - 자바 다운로드 : oracle.com
@@ -34,5 +34,6 @@
     - Spring 3.XX. plugin해서 설치한다. -> 재실행 한다.
     - open perspective -> spring 으로 환경을 바꿔준다.
     - Spring Legacy Project를 만들어서 시작
+    - pom.xml에서 java version 변경 1.6 -> 1.8
     
     

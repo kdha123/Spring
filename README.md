@@ -35,5 +35,6 @@
     - open perspective -> spring 으로 환경을 바꿔준다.
     - Spring Legacy Project를 만들어서 시작
     - pom.xml에서 java version 변경 1.6 -> 1.8
+    - maven -> update project -> servers에서 tomcat등록 후 run server -> "Hello world"
     
     

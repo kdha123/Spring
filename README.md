@@ -1,7 +1,7 @@
 # Spring Framework (Java library)
-+ **개발환경**
++ #개발환경
 1. **JAVA 8** -> JDK 1.8 : javac 포함
-    - 자바 다운로드 : oracle.com
+    - 자바 다운로드 : https://oracle.com
     - 기본 설치
     - 환경 설정 : JAVA_HOME, CLASSPATH   
     C:\Program Files\Java\jdk1.8.0_221   
@@ -28,7 +28,7 @@
     - 12c 이상 버전 : 사용자 - C##이름
        
 5. **SQL Developer** - DB 연결 : 클라이언트 프로그램
-    - 다운로드 : oracle.com
+    - 다운로드 : https://oracle.com
 
 6. **STS 실행**
     - Spring 3.XX. plugin해서 설치한다. -> 재실행 한다.
@@ -36,5 +36,23 @@
     - Spring Legacy Project를 만들어서 시작
     - pom.xml에서 java version 변경 1.6 -> 1.8
     - maven -> update project -> servers에서 tomcat등록 후 run server -> "Hello world"
+
+7. **Spring version**변경
+    - pom.xml에서 springframework-version을 5.0.7로 수정 -> Maven Dependencies에서 바뀐거 확인.
+    - 서버를 돌려서 Hello world가 잘 나오는+지 확인해본다.
+    - 문제가 생기는 경우 사용자 폴더에 .m2폴더의 내용을 삭제하고 다시 실행
     
+8. **Lombok library**설치
+    - DTO를 자동으로 생성해줘서 약간의 코드만으로도 필요한 클래스를 설계할 때 유용
+    - Lombok 라이브러리 다운로드 - https://projectlombok.org/download
+    - 다운로드 후에 다운로드된 경로에서 cmd로 java -jar lombok.jar 실행
+    - 필요한 IDE 선택후 설치 -> IDE 실행위치에 lombok.jar가 들어가 있는지 확인
+    - pom.xml에 dependency를 추가
+    - sts를 재실행 -> Maven -> update Project
+    - @Data -> setter / getter / toString() / 생성자 자동만들기
+    - @Setter -> setter를 이용한 DI 적용 
     
+9. **DI 테스트**
+    - Lombok라이브러리를 추가하고 spring-test라이브러리를 이용해서 스프링 동작 테스트
+    - root-context.xml에 context nampespace를 추가하고 component-scan코드 추가.
+    - Rus As > Junit Test

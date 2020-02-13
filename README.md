@@ -1,5 +1,8 @@
 # Spring Framework (Java library)
-+ #개발환경
+
++ **개발환경**
+<hr>   
+
 1. **JAVA 8** -> JDK 1.8 : javac 포함
     - 자바 다운로드 : https://oracle.com
     - 기본 설치
@@ -55,4 +58,28 @@
 9. **DI 테스트**
     - Lombok라이브러리를 추가하고 spring-test라이브러리를 이용해서 스프링 동작 테스트
     - root-context.xml에 context nampespace를 추가하고 component-scan코드 추가.
+    - class를 만들고 src/test/java에서 테스트한다.
+    - 자동생성되는 어노테이션 - @Controller, @Service, @Repository, @Component, @RestController
+    - lombok 의 @Data @Setter, spring - @Autowired, java - @Inject 이용 
     - Rus As > Junit Test
+<hr>
+
++ **스프링 MVC 설정**
+<hr>
+
+1. **한글처리**   
+    - pom.xml에서 javax.servlet 버전은 3.1.0으로 바꾸고 web.xml의 web-app 속성을 바꿔준다.
+    - 한글처리 : web.xml에 한글처리하는 필터를 추가한다.
+    - filter-class : org.springframework.web.filter.CharacterEncodingFilter
+
+2. **흐름**
+    - -> web.xml의 DispatcherServlet(FrontController와 동일)   
+      -> @Controller 어노테이션을 이용해서 jsp 주소를 가져오고   
+      -> sevlet-context.xml 에서 주소를 조립해서 보여준다.
+
+3. **화면 띄우기**
+    - localhost/board/list.do(get) -> 게시판 리스트
+    - controller 패키지 안에 BoardController 클래스를 만들고 @Controller 어노테이션으로 자동생성
+    - RequestMapping(value = "/board/XXXX.do", method = RequestMethod.GET(POST))로 처리방식 설정해주고
+    - return "board/XXXX" 로 url을 조합할 수 있게 넘겨서 XXXX.jsp를 띄운다.
+      

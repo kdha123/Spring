@@ -1,8 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	<!-- beans 태그 안에 bean tag를 넣을 수있다. -->
+	<!-- <bean> ==> 객체를 선언하는 것 : 자동 생성 (선언을 하는 순간 생성한다.) -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@402-oracle:1521:orcl"></property>
+		<property name="username" value="c##java04"></property>
+		<property name="password" value="java04"></property>
+	</bean>
+	
+	<!-- HikariCP configuration -->
+	<!-- 서버가 시작되면 일정 개수의 Connection을 만들어서 DBCP(DataBaseConnectionPool)에 넣어둔다. -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
+		<!-- hikariConfig를 참조한다. 생성자의 파라미터를 뜻하는 태그(constructor - 생성자) -->
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+	
+	<!-- MyBatis - DAO코드 자동 생성 -->	
+	<!-- HikariCP를 MyBatis에 넣는 것 -->
+	<!-- Mapper Interface(메서드 이름) - Mapper xml(SQL) -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- dao(persitence) 자동으로 만들어 주기위한 위치 -->
+	<mybatis-spring:scan base-package="org.zerock"/>
+	<context:component-scan base-package="org.zerock">
+	</context:component-scan>	
 </beans>

@@ -71,15 +71,59 @@
     - pom.xml에서 javax.servlet 버전은 3.1.0으로 바꾸고 web.xml의 web-app 속성을 바꿔준다.
     - 한글처리 : web.xml에 한글처리하는 필터를 추가한다.
     - filter-class : org.springframework.web.filter.CharacterEncodingFilter
+    - forceEncoding true 추가
 
 2. **흐름**
     - -> web.xml의 DispatcherServlet(FrontController와 동일)   
       -> @Controller 어노테이션을 이용해서 jsp 주소를 가져오고   
-      -> sevlet-context.xml 에서 주소를 조립해서 보여준다.
+      -> sevlet-context.xml 에서 주소를 조립해서 Dispather로 보여준다.
 
 3. **화면 띄우기**
     - localhost/board/list.do(get) -> 게시판 리스트
     - controller 패키지 안에 BoardController 클래스를 만들고 @Controller 어노테이션으로 자동생성
     - RequestMapping(value = "/board/XXXX.do", method = RequestMethod.GET(POST))로 처리방식 설정해주고
     - return "board/XXXX" 로 url을 조합할 수 있게 넘겨서 XXXX.jsp를 띄운다.
-      
+
+4. **DAO, DTO**
+    - BoardDTO 생성 : @Data를 이용해서 생성자를 자동으로 만들어준다.
+    - BoardMapper 인터페이스를 생성하고 resource에 똑같은 위치로 BoardMapper.xml을 만들고
+    - namespace를 설정한 후에 select 태그에 id를 list 메서드 이름으로 한 후 쿼리문 작성
+    
+5. **Service**
+    - @Service를 이용
+    - @Inject를 이용해서 DI를 자동생성(private으로 변수 만들어줘야함.)
+    - BoardMapper 인터페이스를 이용해 만든 list()를 리턴해줄 list메서드를 생성한다.
+<hr>
+
++ **Oracle 연동**
+<hr> 
+
+1. **JDBC 연결**
+    - Oracle 11g, SQL developer 설정하고 sqldeveloper/jdbc/lib 폴더에 ojdbc8.jar 파일 확인
+    - pom.xml에 ojdbc 추가
+    - JDBCTests 테스트 코드 작성
+    - 커넥션 풀 설정 : pom.xml에 HikariCP를 추가 
+<hr>
+
++ **MyBatis 연동**
+<hr>  
+
+1. **라이브러리 추가**
+    - SQL mapping 프레임워크로 분류
+    - 자동으로 Connection, close() 가능, return 타입을 지정하는경우 자동으로 객체 생성 및 ResultSet 처리
+    - pom.xml에 MyBatis 관련 라이브러리를 추가한다. (spring-jdbc/spring-tx/mybatis/mybatis-spring)
+    
+2. **설정**
+    - root-context.xml 설정 : namespace 등록(태그가 생김) ->
+    - SQLSessionFactory 설정 -> DataSource 가져 다 설정(Con 연결) -> mybatis 기본패키지 설정 ->
+    - interface 와 xml을 연결해서 자동화 프로그램 작성
+
+3. **인터페이스 작성**
+    - xml을 이용한 메서드, 어노테이션을 이용한 메서든 선언
+    - xml을 이용한 경우 resource 밑에 인터페이스 이름과 똑같은 경로로 xml을 만들어준다.
+    - xml은 중복 배제를 위해서 namespace를 설정하고  id는 mapper 인터페이스의 메서드와 맞춰준다.
+    
+4. **Test 프로그램 만들기**
+    - @RunWith, @ContextConfiguration, @Log4j
+    - interface 타입의 변수 선언 @Autowire 설정
+    - @Test 메서드 선언 -> 인터페이스 메서드 호출

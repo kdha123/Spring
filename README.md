@@ -64,37 +64,6 @@
     - Rus As > Junit Test
 <hr>
 
-+ **스프링 MVC 설정**
-<hr>
-
-1. **한글처리**   
-    - pom.xml에서 javax.servlet 버전은 3.1.0으로 바꾸고 web.xml의 web-app 속성을 바꿔준다.
-    - 한글처리 : web.xml에 한글처리하는 필터를 추가한다.
-    - filter-class : org.springframework.web.filter.CharacterEncodingFilter
-    - forceEncoding true 추가
-
-2. **흐름**
-    - -> web.xml의 DispatcherServlet(FrontController와 동일)   
-      -> @Controller 어노테이션을 이용해서 jsp 주소를 가져오고   
-      -> sevlet-context.xml 에서 주소를 조립해서 Dispather로 보여준다.
-
-3. **화면 띄우기**
-    - localhost/board/list.do(get) -> 게시판 리스트
-    - controller 패키지 안에 BoardController 클래스를 만들고 @Controller 어노테이션으로 자동생성
-    - RequestMapping(value = "/board/XXXX.do", method = RequestMethod.GET(POST))로 처리방식 설정해주고
-    - return "board/XXXX" 로 url을 조합할 수 있게 넘겨서 XXXX.jsp를 띄운다.
-
-4. **DAO, DTO**
-    - BoardDTO 생성 : @Data를 이용해서 생성자를 자동으로 만들어준다.
-    - BoardMapper 인터페이스를 생성하고 resource에 똑같은 위치로 BoardMapper.xml을 만들고
-    - namespace를 설정한 후에 select 태그에 id를 list 메서드 이름으로 한 후 쿼리문 작성
-    
-5. **Service**
-    - @Service를 이용
-    - @Inject를 이용해서 DI를 자동생성(private으로 변수 만들어줘야함.)
-    - BoardMapper 인터페이스를 이용해 만든 list()를 리턴해줄 list메서드를 생성한다.
-<hr>
-
 + **Oracle 연동**
 <hr> 
 
@@ -127,3 +96,57 @@
     - @RunWith, @ContextConfiguration, @Log4j
     - interface 타입의 변수 선언 @Autowire 설정
     - @Test 메서드 선언 -> 인터페이스 메서드 호출
+<hr>
+
++ **스프링 MVC 설정**
+<hr>
+
+1. **한글처리**   
+    - pom.xml에서 javax.servlet 버전은 3.1.0으로 바꾸고 web.xml의 web-app 속성을 바꿔준다.
+    - 한글처리 : web.xml에 한글처리하는 필터를 추가한다.
+    - filter-class : org.springframework.web.filter.CharacterEncodingFilter
+    - forceEncoding true 추가
+
+2. **흐름**
+    - -> web.xml의 DispatcherServlet(FrontController와 동일)   
+      -> @Controller 어노테이션을 이용해서 jsp 주소를 가져오고   
+      -> sevlet-context.xml 에서 주소를 조립해서 Dispather로 보여준다.
+
+3. **DAO, DTO**
+    - BoardDTO 생성 : @Data를 이용해서 생성자를 자동으로 만들어준다.
+    - BoardMapper 인터페이스를 생성하고 resource에 똑같은 위치로 BoardMapper.xml을 만들고
+    - namespace를 설정한 후에 select 태그에 id를 list 메서드 이름으로 한 후 쿼리문 작성
+    
+4. **Service**
+    - @Service를 이용
+    - @Inject를 이용해서 DI를 자동생성(private으로 변수 만들어줘야함.)
+    - BoardMapper 인터페이스를 이용해 만든 list()를 리턴해줄 list메서드를 생성한다.
+
+5. **화면 띄우기**
+    - localhost/board/list.do(get) -> 게시판 리스트
+    - controller 패키지 안에 BoardController 클래스를 만들고 @Controller 어노테이션으로 자동생성
+    - RequestMapping(value = "/board/XXXX.do", method = RequestMethod.GET(POST))로 처리방식 설정해주고
+    - request가 들어있는 model.addAttribute(java에서 request.setAttribute와 동일)로 jsp에서 사용할 수 있게 service를 실행해준다.
+    - return "board/XXXX" 로 url을 조합할 수 있게 넘겨서 XXXX.jsp를 띄운다.
+
+6. **글쓰기**
+    - BoardController에 writeForm()를 만들어주고 return으로 write.jsp로 가게한다.
+    - 글쓰기 처리는 Method를 POST로 받으면 처리되게끔한다.
+    - write(BoardDTO dto)를 쓰면 title, content, writer를 dto로 자동으로 받아온다.
+    - Service, Mapper에 있는 write 메서드에도 dto를 받게 해주고
+    - Mapper.xml에서 insert태그를 사용해서 #{title} 등으로 사용하면 글쓰기 처리가된다.
+    
+7. **글보기**
+    - @RequestMapping(/board/view.do)이고 리스트에서 넘긴 no를 view(int no)로 해주면
+    - 받아올 수 있다. 그 번호를 가지고 리스트와 똑같이 하되 쿼리에 조건을 붙여서 where no = #{no}
+    - 하고 model.addAttribute로 request에 담으면 상세보기가 가능하다.
+    
+8. **글수정**
+    - view를 이용해서 수정할 글이 보이도록 글보기 서비스를 먼저 실행해준다.
+    - 글쓰기와 마찬가지로 post로 넘어온 매개변수들을 dto에 받아서 사용한다.
+    - Mapper.xml에서는 update태그를 사용한다.
+
+9. **글삭제**
+    - 글보기와 마찬가지로 no를 받아와서 Service, Mapper에 만들어주고
+    - Mapper.xml에서 delete 태그를 이용해 받아온 no로 where문을 작성해준다.
+    - redirect로 list.do로 가게 한다. 

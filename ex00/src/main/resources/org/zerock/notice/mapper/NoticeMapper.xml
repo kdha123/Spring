@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace 설정 : 중복을 배제시키기 위해서 -->
+<mapper namespace="org.zerock.notice.mapper.NoticeMapper">
+ <!-- id는 mapper 인터페이스의 메서드와 맞춰준다. -->
+ <!-- 게시판 리스트 처리 -->
+ <select id="list" resultType="org.zerock.notice.dto.NoticeDTO">
+ 	select * from (
+ 		select rownum rnum, no, title, startDate, writeDate, endDate, updateDate
+ 		from (
+ 			select no, title, to_char(startDate, 'yyyy-mm-dd') startDate, to_char(endDate, 'yyyy-mm-dd') endDate,
+ 			to_char(writeDate, 'yyyy-mm-dd') writeDate,to_char(updateDate, 'yyyy-mm-dd') updateDate from notice order by no desc
+ 		)
+ 	) where rnum between 1 and 10
+ </select>
+ 
+ <!-- 게시판 글보기 -->
+ <select id="view" resultType="org.zerock.notice.dto.NoticeDTO">
+ 	select no, title, content, startDate, writeDate, endDate, updateDate  from notice where no = #{no}
+ </select>
+ 
+ <!-- 게시판 글쓰기 처리 -->
+ <insert id="write">
+ 	insert into notice(no, title, content, startDate, endDate)
+ 	values(notice_seq.nextval, #{title}, #{content}, #{startDate}, #{endDate})
+ </insert>
+ 
+ <!-- 게시판 글수정처리 -->
+ <update id="update">
+ 	update notice set title = #{title},
+ 	 content = #{content}, startDate = #{startDate}, endDate = #{endDate} where no = #{no}
+ </update>
+ 
+ <!-- 게시판 글삭제처리 -->
+ <delete id="delete">
+ 	delete from notice where no = #{no}
+ </delete>
+</mapper>

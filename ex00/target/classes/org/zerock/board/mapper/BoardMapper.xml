@@ -6,6 +6,7 @@
 <!-- namespace 설정 : 중복을 배제시키기 위해서 -->
 <mapper namespace="org.zerock.board.mapper.BoardMapper">
  <!-- id는 mapper 인터페이스의 메서드와 맞춰준다. -->
+ <!-- 게시판 리스트 처리 -->
  <select id="list" resultType="org.zerock.board.dto.BoardDTO">
  	select * from (
  		select rownum rnum, no, title, writer, writeDate, hit
@@ -15,7 +16,26 @@
  		)
  	) where rnum between 1 and 10
  </select>
+ 
+ <!-- 게시판 글보기 -->
  <select id="view" resultType="org.zerock.board.dto.BoardDTO">
- 	select no, title, content, writer, writeDate, hit from board where no = 200
+ 	select no, title, content, writer, writeDate, hit from board where no = #{no}
  </select>
+ 
+ <!-- 게시판 글쓰기 처리 -->
+ <insert id="write">
+ 	insert into board(no, title, content, writer)
+ 	values(board_seq.nextval, #{title}, #{content}, #{writer})
+ </insert>
+ 
+ <!-- 게시판 글수정처리 -->
+ <update id="update">
+ 	update board set title = #{title},
+ 	 content = #{content}, writer = #{writer} where no = #{no}
+ </update>
+ 
+ <!-- 게시판 글삭제처리 -->
+ <delete id="delete">
+ 	delete from board where no = #{no}
+ </delete>
 </mapper>

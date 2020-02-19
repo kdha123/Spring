@@ -98,6 +98,17 @@
     - @Test 메서드 선언 -> 인터페이스 메서드 호출
 <hr>
 
++ **log4jdbc-log4j2 설정**
+<hr>
+
+1. **라이브러리 설정**
+    - pom.xml에 log4jdbc-log4j2 라이브러리 추가
+
+2. **로그 설정 파일 추가 및 JDBC의 연결정보 수정**
+    - src/main/resources 밑에 log4jdbc.log4j2.properties 파일 추가
+    - root-context.xml에서 driverClassName 수정
+<hr>
+
 + **스프링 MVC 설정**
 <hr>
 

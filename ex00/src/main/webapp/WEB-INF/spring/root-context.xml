@@ -11,8 +11,10 @@
 	<!-- beans 태그 안에 bean tag를 넣을 수있다. -->
 	<!-- <bean> ==> 객체를 선언하는 것 : 자동 생성 (선언을 하는 순간 생성한다.) -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@402-oracle:1521:orcl"></property>
+	<!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@402-oracle:1521:orcl"></property> -->
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@402-oracle:1521:orcl"></property>
 		<property name="username" value="c##java04"></property>
 		<property name="password" value="java04"></property>
 	</bean>

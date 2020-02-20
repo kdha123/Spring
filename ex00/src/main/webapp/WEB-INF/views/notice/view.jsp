@@ -63,7 +63,7 @@ $(function(){
 	<tr>
 	<td colspan="2">
 	<a href="update.do?no=${dto.no }"><button>수정</button></a>
-	<a href="delete.do?no="${dto.no }><button id = "deleteBtn">삭제</button></a>
+	<a href="delete.do?no=${dto.no }"><button id = "deleteBtn">삭제</button></a>
 	<a href="list.do"><button>목록</button></a>
 	</td>
 	</tr>

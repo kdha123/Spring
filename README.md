@@ -161,3 +161,20 @@
     - 글보기와 마찬가지로 no를 받아와서 Service, Mapper에 만들어주고
     - Mapper.xml에서 delete 태그를 이용해 받아온 no로 where문을 작성해준다.
     - redirect로 list.do로 가게 한다. 
+
+10. **Controller의 return type**
+    - String : return type이 String인 경우 return되는 String으로 jsp를 찾는다.
+    - void : 호출하는 URL과 동일한 이름의 jsp을 찾는다.
+    - ModelAndView : return type ModelAndView 인 경우 return 되는 객체의 데이터로 jsp를 찾고   
+     전달되는 데이터를 같이 담아서 넘긴다.
+    - VO, DTO, ResponseEntity 등은 Ajax에서 많이 쓰인다.
+    - json, xml 데이터를 문자열로 만들어서 @ResponseBody로 보낼 수 있다. 즉, Ajax처리하는 것
+    - pom.xml에 jackson-databind 라이브러리를 등록
+    - Ajax를 통해서 순수한 데이터를 받아갈 때는 @RestController를 사용한다. 특히, Mobile 앱의 데이터 처리
+    - DTO, VO도 마찬가지고 set()을 이용해서 json 데이터를 그대로 넘길 수 있다.
+    - ResponseEntity : 데이터와 헤더메시지와 상태코드를 전달할 수 있다.
+
+11. **file upload**
+    - pom.xml에 commons-fileupload 라이브러리 추가
+    - servlet-context.xml 추가 : 다른 객체를 설정하는 것과 달리 파일 업로드의 경우에   
+      반드시 id속성의 값을 multipartResolver로 지정해야하고 fileUpload 설정을 위한 객체를 생성한다.

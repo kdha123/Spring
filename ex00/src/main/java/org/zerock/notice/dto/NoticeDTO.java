@@ -6,6 +6,5 @@ import lombok.Data;
 public class NoticeDTO {
 	
 	private int no;
-	private String title, content, startDate, endDate, writeDate,
-	updateDate;
+	private String title, content, startDate, endDate, writeDate, updateDate;
 }

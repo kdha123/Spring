@@ -16,7 +16,7 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 	
-	// 게시판 리스트
+	// 공지사항 리스트
 	@RequestMapping("/notice/list.do")
 	public String list(Model model){
 		// 처리한 결과 noticeService.list()를 model에 담는다.
@@ -26,7 +26,7 @@ public class NoticeController {
 		return "notice/list";
 	}
 	
-	// 게시판 보기
+	// 공지사항 보기
 	@RequestMapping(value = "/notice/view.do", method = RequestMethod.GET)
 	public String view(int no, Model model){
 		// 넘어오는 데이터 확인
@@ -36,13 +36,13 @@ public class NoticeController {
 		return "notice/view";
 	}
 	
-	//게시판 글쓰기 폼
+	//공지사항 글쓰기 폼
 	@RequestMapping(value = "/notice/write.do", method = RequestMethod.GET)
 	public String writeForm(){
 		return "notice/write";
 	}
 	
-	// 게시판 글쓰기 처리
+	// 공지사항 글쓰기 처리
 	@RequestMapping(value = "/notice/write.do",method = RequestMethod.POST)
 	// Spring(DispatherServlet)이 넘어오는 데이터를 noticeDTO를 생성하고
 	// 프로퍼티 이름과 같은 항이 있으면 바로 넣어준다.
@@ -51,27 +51,27 @@ public class NoticeController {
 		System.out.println("noticeController.write().dto: "+dto);
 		// DB처리
 		noticeService.write(dto);
-		// 자동으로 게시판 리스트로 이동
+		// 자동으로 공지사항 리스트로 이동
 		return "redirect:list.do";
 	}
 	
-	//게시판 글수정 폼
+	//공지사항 글수정 폼
 	@RequestMapping(value = "/notice/update.do", method = RequestMethod.GET)
 	public String updateForm(Model model,int no){
 		model.addAttribute("dto", noticeService.view(no));
 		return "notice/update";
 	}
-	// 게시판 글수정 처리
+	// 공지사항 글수정 처리
 	@RequestMapping(value = "/notice/update.do",method = RequestMethod.POST)
 	public String update(NoticeDTO dto){
 		// 넘어오는 데이터 확인
 		System.out.println("noticeController.update().dto: "+dto);
 		// DB처리
 		noticeService.update(dto);
-		// 자동으로 게시판 글보기로 이동
+		// 자동으로 공지사항 글보기로 이동
 		return "redirect:view.do?no="+dto.getNo();
 	}
-	//게시판 글삭제 처리
+	//공지사항 글삭제 처리
 	@RequestMapping(value = "/notice/delete.do", method = RequestMethod.GET)
 	public String delete(int no){
 		// 넘어오는 데이터 확인

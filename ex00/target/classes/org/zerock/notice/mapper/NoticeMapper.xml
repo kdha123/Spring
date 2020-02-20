@@ -19,7 +19,8 @@
  
  <!-- 게시판 글보기 -->
  <select id="view" resultType="org.zerock.notice.dto.NoticeDTO">
- 	select no, title, content, startDate, writeDate, endDate, updateDate  from notice where no = #{no}
+ 	select no, title, content, to_char(startDate, 'yyyy-mm-dd') startDate, to_char(endDate, 'yyyy-mm-dd') endDate,
+ 			to_char(writeDate, 'yyyy-mm-dd') writeDate,to_char(updateDate, 'yyyy-mm-dd') updateDate from notice where no = #{no}
  </select>
  
  <!-- 게시판 글쓰기 처리 -->

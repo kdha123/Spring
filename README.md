@@ -32,11 +32,13 @@
        
 5. **SQL Developer** - DB 연결 : 클라이언트 프로그램
     - 다운로드 : https://oracle.com
+    - 사용자 생성/권한
+    - 사용자로 접속후에 board table 생성
 
 6. **STS 실행**
     - Spring 3.XX. plugin해서 설치한다. -> 재실행 한다.
     - open perspective -> spring 으로 환경을 바꿔준다.
-    - Spring Legacy Project를 만들어서 시작
+    - Spring Legacy Project를 만들어서 시작 (Spring MVC project)
     - pom.xml에서 java version 변경 1.6 -> 1.8
     - maven -> update project -> servers에서 tomcat등록 후 run server -> "Hello world"
 
@@ -56,6 +58,7 @@
     - @Setter -> setter를 이용한 DI 적용 
     
 9. **DI 테스트**
+    - 경고 뜨는거 해결하고 시작(log4j)
     - Lombok라이브러리를 추가하고 spring-test라이브러리를 이용해서 스프링 동작 테스트
     - root-context.xml에 context nampespace를 추가하고 component-scan코드 추가.
     - class를 만들고 src/test/java에서 테스트한다.

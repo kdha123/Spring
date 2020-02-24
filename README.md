@@ -110,6 +110,13 @@
 2. **로그 설정 파일 추가 및 JDBC의 연결정보 수정**
     - src/main/resources 밑에 log4jdbc.log4j2.properties 파일 추가
     - root-context.xml에서 driverClassName 수정
+    
+<hr>
+
++ **스프링 MVC 흐름도**
+<hr>
+![MVCflow](./image/flow.png)
+
 <hr>
 
 + **스프링 MVC 설정**

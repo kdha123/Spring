@@ -189,3 +189,10 @@
     - pom.xml에 commons-fileupload 라이브러리 추가
     - servlet-context.xml 추가 : 다른 객체를 설정하는 것과 달리 파일 업로드의 경우에   
       반드시 id속성의 값을 multipartResolver로 지정해야하고 fileUpload 설정을 위한 객체를 생성한다.
+
+12. **sitemesh 사용하기**
+    - parser를 통해 title, header, body를 분해하고 mapper로 조립하는게 sitemesh
+    - pom.xml에서 2.4.2 라이브러리 추가(search.maven.org에서 sitemesh 검색 후 dependency 추가)
+    - sitemesh.xml, decorators.xml는 WEB-INF 밑에 추가
+    - default_decorator.jsp는 views/decorator 밑에 만든다.
+    - web.xml에 sitemesh filter를 선언한다.

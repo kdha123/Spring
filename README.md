@@ -196,3 +196,16 @@
     - sitemesh.xml, decorators.xml는 WEB-INF 밑에 추가
     - default_decorator.jsp는 views/decorator 밑에 만든다.
     - web.xml에 sitemesh filter를 선언한다.
+
+13. **로그 레벨 설정 및 예외처리**
+    - resources 밑에 log4j.xml을 이용한다.
+    - <logger>를 지정해서 처리한다. 
+    - 기본은 info 레벨, warn과 같은 좀 더 높은 레벨의 로그만 기록하게 수정할 수 있다.
+    - 예외처리는 두가지 방식으로 처리할 수 있다.
+    - @ExceptionHandler와 @ControllerAdvice를 이용한 처리
+    - @ResponseEntity를 이용하는 예외 메시지 구성
+    - @Log4j 어노테이션 적용할 때 오류가 나면 pom.xml의 log4j dependency의 scope가 runtime이면 주석처리
+    - error_page.jsp를 만든후에 model에 담겨있는 exception을 EL객체로 불러온다.
+    - 404에러는 web.xml에 throwExceptionIfNoHandlerFound true로 추가
+    - @ResponseStatus을 사용해서 메서드 생성
+    

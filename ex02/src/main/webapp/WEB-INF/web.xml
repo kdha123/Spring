@@ -64,6 +64,7 @@
 	<!-- 레이아웃(sitemesh) 2.4.2ver -->
 	<filter>
 		<filter-name>sitemesh</filter-name>
+		<!-- /WEB-INF/sitemesh.xml을 찾아서 실행할 데이터로 사용 -->
 		<filter-class>
 			com.opensymphony.sitemesh.webapp.SiteMeshFilter
 		</filter-class>

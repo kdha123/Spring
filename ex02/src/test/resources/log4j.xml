@@ -4,28 +4,15 @@
 
 	<!-- Appenders -->
 	<appender name="console" class="org.apache.log4j.ConsoleAppender">
-		<param name="Target" value="System.out" />
+		<param name="Target" value="System.out" /> 
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="org.zerock.controller">
+	<logger name="com.webjjang.main">
 		<level value="info" />
-	</logger>
-	<logger name="org.zerock.sample">
-		<level value="info"/>
-	</logger>
-	<!-- DB log -->
-	<logger name="jdbc.audit">
-		<level value="warn"/>
-	</logger>
-	<logger name="jdbc.resultset">
-		<level value="warn"/>
-	</logger>
-	<logger name="jdbc.connection">
-		<level value="warn"/>
 	</logger>
 	
 	<!-- 3rdparty Loggers -->

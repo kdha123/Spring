@@ -2,7 +2,9 @@ package com.webjjang.board.sevice;
 
 import java.util.List;
 
+
 import com.webjjang.board.dto.BoardDTO;
+
 
 public interface BoardService {
 	

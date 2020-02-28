@@ -11,7 +11,7 @@ public interface BoardMapper {
 	//	1.리스트 - list()
 	public List<BoardDTO> list();
 	//	2.글쓰기 처리 - write(dto)
-	public Integer writer(BoardDTO dto);
+	public Integer write(BoardDTO dto);
 	//	3.글보기 - view(no) / increaseHit(no)
 	public BoardDTO view(int no);
 	public Integer increaseHit(int no);

@@ -27,13 +27,14 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardDTO> list() {
 		// TODO Auto-generated method stub
+		log.info(mapper.list());
 		return mapper.list();
 	}
 
 	@Override
 	public Integer write(BoardDTO dto) {
 		// TODO Auto-generated method stub
-		return mapper.writer(dto);
+		return mapper.write(dto);
 	}
 
 	@Override

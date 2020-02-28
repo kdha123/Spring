@@ -33,6 +33,7 @@ public class BoardController {
 	public String list(Model model) {
 		// /WEB-INF/views/ + board + /list + .jsp
 		model.addAttribute("list", boardService.list());
+		log.info("list");
 		return module+"/list";
 	}
 	//2. 게시판 글보기
@@ -65,9 +66,16 @@ public class BoardController {
 	//4-1. 게시판 글수정 처리 - 전체 데이터
 	@PostMapping("/update.do")
 	public String update(BoardDTO dto) {
-		boardService.update(dto);
+		int result = boardService.update(dto);
+		// return 값이 Integer로 넘어오기 때문에 0일 경우 처리가 안된 것.
+		if(result > 0) {
+			return "redirect:view.do?no=" + dto.getNo();
+		}else {
+			// 오류 보여주는 페이지로 이동 -> 수정이 정상적으로 안된 경우 : 비밀번호가 틀림
+			return "error/error_pw";
+		}
 		// /WEB-INF/views/ + board + /list + .jsp
-		return "redirect:view.do?no=" + dto.getNo();
+		
 	}
 	//5. 게시판 글삭제 - 글번호, 비밀번호
 	@PostMapping("/delete.do") //비밀번호가 있으므로 보이지 않게 post방식으로 전달

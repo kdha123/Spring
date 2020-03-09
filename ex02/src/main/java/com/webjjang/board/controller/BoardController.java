@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.webjjang.board.dto.BoardDTO;
 import com.webjjang.board.sevice.BoardService;
 //import com.webjjang.board.sevice.BoardServiceImpl;
+import com.webjjang.util.page.PageObject;
 
 //import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -30,9 +31,12 @@ public class BoardController {
 	
 	//1. 게시판 리스트
 	@GetMapping("/list.do")
-	public String list(Model model) {
+	public String list(Model model, PageObject pageObject) {
+//		System.out.println("BoardController.list().pageObject : "+pageObject);
 		// /WEB-INF/views/ + board + /list + .jsp
-		model.addAttribute("list", boardService.list());
+		// DB에서 데이터 가져오기 -> 페이지 계산, JSP에서 표시할 페이지네이션 정보가 계산된다.
+		model.addAttribute("list", boardService.list(pageObject));
+		model.addAttribute("pageObject", pageObject);
 		log.info("list");
 		return module+"/list";
 	}

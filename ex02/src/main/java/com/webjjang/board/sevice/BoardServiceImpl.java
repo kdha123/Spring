@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.webjjang.board.dto.BoardDTO;
 import com.webjjang.board.mapper.BoardMapper;
+import com.webjjang.util.page.PageObject;
 
 import lombok.AllArgsConstructor;
 //import lombok.AllArgsConstructor;
@@ -25,10 +26,15 @@ public class BoardServiceImpl implements BoardService {
 	private BoardMapper mapper;
 	
 	@Override
-	public List<BoardDTO> list() {
+	public List<BoardDTO> list(PageObject pageObject) {
 		// TODO Auto-generated method stub
-		log.info(mapper.list());
-		return mapper.list();
+		// 페이지 정보를 계산하는 메서드 호출
+		pageObject.calcuPageInfo();
+		// jsp의 페이지 네이션을 위한 계산 -> jsp에 전달이 되어야한다. request에 담는다.(Model)
+		pageObject.setTotalRow(mapper.getTotalRow());
+		System.out.println("BoardServiceImpl.list().pageObject : "+pageObject);
+//		log.info(mapper.list(pageObject));
+		return mapper.list(pageObject);
 	}
 
 	@Override

@@ -4,12 +4,13 @@ import java.util.List;
 
 
 import com.webjjang.board.dto.BoardDTO;
+import com.webjjang.util.page.PageObject;
 
 
 public interface BoardService {
 	
 	// 1.리스트 - list()
-	public List<BoardDTO> list();
+	public List<BoardDTO> list(PageObject pageObject);
 	// 2.글쓰기 처리 - write(dto)
 	public Integer write(BoardDTO dto);
 	// 3.글보기 - view(no) / increaseHit(no)

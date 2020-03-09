@@ -11,21 +11,18 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.webjjang.controller">
+	<logger name="com.webjjang.main">
 		<level value="info" />
-	</logger>
-	<logger name="com.webjjang.sample">
-		<level value="info"/>
 	</logger>
 	<!-- DB log -->
 	<logger name="jdbc.audit">
-		<level value="warn"/>
+		<level value="info"/>
 	</logger>
 	<logger name="jdbc.resultset">
-		<level value="warn"/>
+		<level value="info"/>
 	</logger>
 	<logger name="jdbc.connection">
-		<level value="warn"/>
+		<level value="info"/>
 	</logger>
 	
 	<!-- 3rdparty Loggers -->

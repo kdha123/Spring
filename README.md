@@ -209,3 +209,25 @@
     - 404에러는 web.xml에 throwExceptionIfNoHandlerFound true로 추가
     - @ResponseStatus을 사용해서 메서드 생성
     
+14. **페이징처리**
+    - 많은 데이터를 받기 위해서는 클래스를 만들어야한다. 
+    - src/main/java/com/webjjang/util/page/PageObject.java 참조
+    - java 부분의 처리를 위해 현재 페이지, 한 페이지에 표시할 데이터의 갯수, 시작번호, 끝번호 변수생성
+    - startRow = (page - 1) * perPageNum + 1;
+    - endRow = this.startRow + perPageNum - 1;
+    - 계산하는 변수, 메서드들 생성
+    - Controller에서 PageObject를 매개변수로 받을 수 있도록 한다.
+    - Spring에서는 기본 생성자를 쓰기 때문에 setter를 만들어서 해야한다.
+    - Mapper.xml 에서는 #{startRow} 등을 property를 받아와서 사용한다.
+    - jsp에서 페이지네이션을 사용하기 위해서 전체 데이터 갯수에 따라서 계산을 해줘야한다.
+    - totalPage = (totalRow - 1) / perPageNum + 1;
+    - startPage = (page - 1) / perGroupPageNum * perGroupPageNum + 1;
+    - endPage = startPage + perGroupPageNum - 1;
+    - getTotalRow()를 Mapper에 만들어준고 service에서 페이지 네이션을 위한 계산을 해준다.
+
+15. **검색 처리**
+    - list.jsp에서 searchDiv 참조
+    - 제목, 내용, 작성자를 검색할 수 있게 한다.
+    - 페이지는 1페이지, 한 페이지에 표시할 데이터 갯수를 hidden으로 전달한다.
+    - Mapper.xml에서 Mybatis 동적 sql를 이용. BoardMapper.xml 참조
+    - '%${word}%' 오류 발생 '%' || #{word} || '%'로 변경

@@ -16,6 +16,9 @@
 	<logger name="com.webjjang.main">
 		<level value="info" />
 	</logger>
+	<logger name="com.webjjang.board.controller">
+		<level value="info" />
+	</logger>
 	<!-- DB log -->
 	<logger name="jdbc.audit">
 		<level value="warn" />

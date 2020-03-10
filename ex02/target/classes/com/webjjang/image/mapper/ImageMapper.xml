@@ -4,33 +4,36 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- namespace 설정 : 중복을 배제시키기 위해서 -->
-<mapper namespace="com.webjjang.board.mapper.BoardMapper">
+<mapper namespace="com.webjjang.image.mapper.ImageMapper">
 	<!-- id는 mapper 인터페이스의 메서드와 맞춰준다. -->
 	<!-- 게시판 리스트 처리 -->
-	<select id="list" resultType="com.webjjang.board.dto.BoardDTO">
+	<select id="list" resultType="com.webjjang.image.dto.ImageDTO">
 		select * from (
-		select rownum rnum, no, title, writer, writeDate, hit, reply_cnt
+		select rownum rnum, no, title, id, name, writeDate, fileName
 		from (
-		select no, title, writer, writeDate, hit, reply_cnt
-		from board
+		select i.no, i.title, i.id, m.name, i.writeDate, i.fileName 
+		from image i , member m
+		where
 		<!-- word property가 null이나 ""가 아니면 검색을 한다. -->
 		<if test="word !=null and word != ''.toString()">
-		where (1=0 		
+		 (1=0 		
 		<include refid="searchCondition" />
-		) 
+		) and
 		</if>
-		order by no desc
+		<!-- join 조건은 반드시 필요하다. -->
+		(m.id = i.id)
+		order by i.no desc
 		)
 		) where rnum between #{startRow} and #{endRow}
 
 	</select>
 	<select id="getTotalRow" resultType="java.lang.Integer">
-		select count(*) from board
+		select count(*) from image i
 		<!-- word property가 null이나 ""가 아니면 검색을 한다. -->
 		<if test="word !=null and word != ''.toString()">
 		where (1=0 		
 		<include refid="searchCondition" />
-		) 
+		)
 		</if>
 	</select>
 	
@@ -39,42 +42,41 @@
 		<!--  mybatis에서 문자열이나 문자 데이터는 ''를 사용하는데 글자가 하나인 경우 char로 취급하기 때문에
 		 toString()를 사용해서 문자열로 변환 -->
 		<if test="key.toString().indexOf('t') >= 0">
-			or title like '%' || #{word} || '%'
+			or i.title like '%' || #{word} || '%'
 		</if>
 		<if test="key.toString().indexOf('c') >= 0">
-			or content like '%' || #{word} || '%'
+			or i.content like '%' || #{word} || '%'
 		</if>
-		<if test="key.toString().indexOf('w') >= 0">
-			or writer like '%' || #{word} || '%'
+		<if test="key.toString().indexOf('i') >= 0">
+			or i.id like '%' || #{word} || '%'
 		</if>
 	</sql>
 	
 	<!-- 게시판 글보기 -->
-	<select id="view" resultType="com.webjjang.board.dto.BoardDTO">
-		select no, title, content, writer, writeDate, hit from board where no =
+	<select id="view" resultType="com.webjjang.image.dto.ImageDTO">
+		select no, title, content, id, name, writeDate, fileName from image where no =
 		#{no}
 	</select>
 
-	<!-- 게시판 글보기하면 조회수 1 증가 -->
-	<update id="increaseHit">
-		update board set hit = hit + 1 where no = #{no}
-	</update>
-
 	<!-- 게시판 글쓰기 처리 -->
 	<insert id="write">
-		insert into board(no, title, content, writer, pw)
-		values(board_seq.nextval, #{title}, #{content}, #{writer}, #{pw})
+		insert into image(no, title, content, id, fileName)
+		values(image_seq.nextval, #{title}, #{content}, #{id}, #{fileName})
 	</insert>
 
-	<!-- 게시판 글수정처리 : 본인이 작성한 글만 수정가능 -->
+	<!-- 게시판 글수정처리 : 본인이 작성한 글만 수정가능 : id로 확인(로그인 처리) -->
 	<update id="update">
-		update board set title = #{title},
-		content = #{content}, writer = #{writer}
-		where no = #{no} and pw = #{pw}
+		update image set title = #{title},
+		content = #{content}
+		where no = #{no} and id = #{id}
+	</update>
+	<!-- 이미지 수정 -->
+	<update id="updateFile">
+	
 	</update>
 
 	<!-- 게시판 글삭제처리 -->
 	<delete id="delete">
-		delete from board where no = #{no} and pw = #{pw}
+		delete from image where no = #{no} and id = #{id}
 	</delete>
 </mapper>

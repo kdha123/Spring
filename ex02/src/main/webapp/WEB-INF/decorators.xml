@@ -12,6 +12,7 @@
 		<pattern>/notice/*</pattern>
 		<pattern>/member/*</pattern>
 		<pattern>/message/*</pattern>
+		<pattern>/image/*</pattern>
 		<pattern>/qna/*</pattern>
 
 	</decorator>

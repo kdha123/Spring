@@ -231,3 +231,12 @@
     - 페이지는 1페이지, 한 페이지에 표시할 데이터 갯수를 hidden으로 전달한다.
     - Mapper.xml에서 Mybatis 동적 sql를 이용. BoardMapper.xml 참조
     - '%${word}%' 오류 발생 '%' || #{word} || '%'로 변경
+    
+16. **image**
+    - post 방식으로 넘겨야하고 enctype을 multipart로 해야한다.
+    - web.xml의 servlet태그 안에 multipart-config 태그를 추가한다.
+    - file-size, location 지정
+    - servlet-context.xml에서 빈을 설정할 때 multipartResolver라는 이름으로 지정된 이름을 사용
+    - DTO를 수정한 후 Mapper도 이미지게시판에 맞게 수정.
+    
+    

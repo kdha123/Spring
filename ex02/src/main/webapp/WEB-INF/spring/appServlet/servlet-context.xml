@@ -26,17 +26,19 @@
 	</beans:bean>
 	
 	<!-- fileUpload 설정을 위한 객체 -->
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="defaultEncoding" value="utf-8"/>
+<!-- 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> -->
+<!-- 		<beans:property name="defaultEncoding" value="utf-8"/> -->
 		<!-- 한번에 올릴 수 있는 전체 용량 제한 1GB -->
-		<beans:property name="maxUploadSize" value="10485756000"/>
+<!-- 		<beans:property name="maxUploadSize" value="10485756000"/> -->
 		<!-- 한개의 파일 용량제한 200MB -->
-		<beans:property name="maxUploadSizePerFile" value="209715200"/>
+<!-- 		<beans:property name="maxUploadSizePerFile" value="209715200"/> -->
 		<!-- 서버에서 파일을 올리면 임시 폴더에 일단 저장하게 되고 다음에 copy명령으로 원하는 위치에 복사하게된다. -->
-		<beans:property name="uploadTempDir" value="file:/C:/tmp"/>
+<!-- 		<beans:property name="uploadTempDir" value="file:/C:/tmp"/> -->
 		<!-- upload되는 파일의 크기가 4MB 이내인 경우는 메인 메모리를 사용한다. 임시 파일을 사용하지 않는다.  -->
-		<beans:property name="maxInMemorySize" value="40485756"/>
-	</beans:bean>
+<!-- 		<beans:property name="maxInMemorySize" value="40485756"/> -->
+<!-- 	</beans:bean> -->
+
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
 	<context:component-scan base-package="com.webjjang" />
 	
 	

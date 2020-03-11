@@ -238,5 +238,7 @@
     - file-size, location 지정
     - servlet-context.xml에서 빈을 설정할 때 multipartResolver라는 이름으로 지정된 이름을 사용
     - DTO를 수정한 후 Mapper도 이미지게시판에 맞게 수정.
+    - util 패키지에 FileUtil 만들어서 중복제거하는 메서드 만들어놨으니 참고.
+    
     
     

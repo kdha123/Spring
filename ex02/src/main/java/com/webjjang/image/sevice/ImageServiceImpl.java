@@ -40,14 +40,14 @@ public class ImageServiceImpl implements ImageService {
 
 	@Override
 	public Integer write(ImageDTO dto) {
-		// TODO Auto-generated method stub
+		// 서버에 저장되어 있는 파일의 이름을 꺼내서 fileName property에 넣어준다.
+//		dto.setFileNameProcess(); // controller에서 처리 - 중복 배제처리
 		return mapper.write(dto);
 	}
 
 	@Override
 	public ImageDTO view(int no) {
 		// TODO Auto-generated method stub
-		mapper.increaseHit(no);
 		return mapper.view(no);
 	}
 

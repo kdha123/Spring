@@ -120,7 +120,7 @@ $(function(){
 							<p>
 								<span class="no">${dto.no }</span>. ${dto.title }
 							</p>
-							<p>${dto.id }(<fmt:formatDate value="${dto.writeDate }" pattern="yyyy-MM-dd"/>)</p>
+							<p>${dto.id }[${dto.name }] - (<fmt:formatDate value="${dto.writeDate }" pattern="yyyy-MM-dd"/>)</p>
 						</div>
 					</div>
 				</div>
@@ -134,7 +134,7 @@ $(function(){
 		</div>
 	<!-- 버튼처리 -->
 		<div>
-				<a href="writeForm.do?perPageNum=${pageObject.perPageNum }"><button>글쓰기</button></a>
+				<a href="write.do?perPageNum=${pageObject.perPageNum }"><button>글쓰기</button></a>
 				<a href="list.do?page=1&perPageNum=${pageObject.perPageNum }"><button>전체목록</button></a>
 		</div>
 </div>

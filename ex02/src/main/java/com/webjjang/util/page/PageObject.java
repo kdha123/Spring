@@ -81,6 +81,10 @@ public class PageObject {
 	public int getPerPageNum() {
 		return perPageNum;
 	}
+	
+	public void setPerPageNum(int perPageNum) {
+		this.perPageNum = perPageNum;
+	}
 
 	public int getStartRow() {
 		return startRow;

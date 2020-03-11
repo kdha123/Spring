@@ -54,7 +54,7 @@
 	
 	<!-- 게시판 글보기 -->
 	<select id="view" resultType="com.webjjang.image.dto.ImageDTO">
-		select no, title, content, id, name, writeDate, fileName from image where no =
+		select i.no, i.title, i.content, i.id, m.name, i.writeDate, i.fileName from image i, member m where (m.id = i.id) and no =
 		#{no}
 	</select>
 

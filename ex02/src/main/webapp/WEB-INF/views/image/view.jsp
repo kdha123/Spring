@@ -11,19 +11,10 @@
 #pwDiv{display: none;}
 </style>
 
-<script type="text/javascript">
-$(function(){
-	$("#deleteBtn").click(function(){
-		$("#pwDiv").show();
-		// href="" -> 자신을 다시 호출한다. => false : 호출하는 것을 무시
-		return false;
-	});
-});
-</script>
 </head>
 <body>
 <!-- 데이터 표시하는 부분 : Bootstrap 쉽게 표시 : 라이브러리 필요 -> sitemesh에서 처리 -->
-<!-- <div class="container"> -->
+<div class="container">
 	<!-- 제목 -->
 	<h1>게시판 글보기</h1>
 	<!-- 데이터 테이블 -->
@@ -49,7 +40,12 @@ $(function(){
 		<tr>
 			<th>작성자</th>
 			<!-- dto안에 no property를 사용했다. => getWriter()를 사용한 것 -->
-			<td>${dto.writer }</td>
+			<td>${dto.id }[${dto.name }]</td>
+		</tr>
+		<tr>
+			<th>이미지</th>
+			<!-- dto안에 no property를 사용했다. => getWriter()를 사용한 것 -->
+			<td><img alt="" src="${dto.fileName }"></td>
 		</tr>
 		<tr>
 			<th>작성일</th>
@@ -60,33 +56,14 @@ $(function(){
 			</td>
 		</tr>
 		<tr>
-			<th>조회수</th>
-			<!-- dto안에 no property를 사용했다. => getHit()를 사용한 것 -->
-			<td>${dto.hit }</td>
-		</tr>
-		<tr>
 			<td colspan="2">
 				<a href="update.do?no=${dto.no }"
 					role="button" class="btn btn-default">수정</a>
 				<a href="" id="deleteBtn"
 					role="button" class="btn btn-default">삭제</a>
-				<div id="pwDiv">
-					<form action="delete.do" method="post">
-						<input type="hidden" name="no"
-						 value="${dto.no}" />
-						<!-- 비밀번호 : 확인용 비밀번호는 안보이게 처리 -->
-						<div class="form-group">
-							<label for="pw">비밀번호:자신글 확인용</label>
-							<input type="password" class="form-control" id="pw" name="pw"
-								autocomplete="off"
-								title="비밀번호는 4~20 글자 사이로 입력하셔야 합니다." pattern="^.{4,20}$">
-						</div>
-						<button>삭제</button>
-					</form>
-				</div>
 			</td>
 		</tr>
 	</table>
-<!-- </div> -->
+</div>
 </body>
 </html>

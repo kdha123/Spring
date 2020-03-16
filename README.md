@@ -240,5 +240,14 @@
     - DTO를 수정한 후 Mapper도 이미지게시판에 맞게 수정.
     - util 패키지에 FileUtil 만들어서 중복제거하는 메서드 만들어놨으니 참고.
     
+17. **댓글 처리**
+    - 댓글리스트, 댓글 등록, 댓글 수정, 댓글 삭제 기능이 필요하고 url이 각각 필요하다.
+    - 댓글리스트 : /reply/pages/:no/:page/:perPageNum -> GET
+    - 댓글등록 : /reply/new  -> POST no, content, id(session)
+    - 수정과 삭제는 본인 글임을 검증하기 위해서 비밀번호를 입력하도록 한다.
+    - 댓글 수정 : /reply/:rno -> PUT or PATCH
+    - 댓글 삭제 : /reply/:rno -> DELETE
+    
+    
     
     

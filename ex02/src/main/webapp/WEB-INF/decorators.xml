@@ -9,11 +9,10 @@
 	<decorator name="main" page="default_decorator.jsp">
 		<pattern>/main/*</pattern>
 		<pattern>/board/*</pattern>
-		<pattern>/notice/*</pattern>
-		<pattern>/member/*</pattern>
-		<pattern>/message/*</pattern>
 		<pattern>/image/*</pattern>
-		<pattern>/qna/*</pattern>
+		<pattern>/reply/*</pattern>
+		
+
 
 	</decorator>
 	<!-- 여러형태의 레이아웃을 사용하려면 decorator 태그를 여러개 만든다. 

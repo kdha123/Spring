@@ -26,7 +26,7 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml
 			</param-value>
 		</init-param>
-		<!-- 404오류처리 -->
+		<!-- 404오류처리  spring에서 404오류를 지원하게 하기 위해 추가-->
 		<init-param>
 			<param-name>throwExceptionIfNoHandlerFound</param-name>
 			<param-value>true</param-value>

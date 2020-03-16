@@ -53,7 +53,7 @@ pre {
 
 /* Add a gray background color and some padding to the footer */
 footer {
-	background-color: #f2f2f2;
+	background-color: #627AAA;
 	padding: 25px;
 }
 
@@ -136,9 +136,18 @@ article {
 		<decorator:body />
 	</article>
 	<footer class="container-fluid text-center">
-		<h2>웹짱 커뮤니티</h2>
-		<p>이 홈페이지의 저작권은 김동현에게 있습니다.</p>
-		<address>012rlaehdgus@naver.com</address>
+       <span><a href="/index.html">홈</a></span>
+       <span><a href="/board/list.do">회사소개</a></span>
+        <span><a href="/board/list.do">이용약관</a></span>
+       <span><a href="/board/list.do"><strong>개인정보취급방침</strong></a></span>
+        <span><a href="/board/list.do">이용안내</a></span>
+    <p class="address">
+        <span>대표자(성명) : 브랜드독 </span> <span>사업자 등록번호 안내 : [123-45-68790]</span> <br />
+        <span>전화 : 02-1234-5678 </span> <span>팩스 : 02-1234-5678 </span> <span>주소 : 서울특별시 구로구 경영기술개발원 </span><br />
+        <span>Contact <strong>security@branddog.com</strong> for more information.</span>
+    </p>
+    <p class="copyright">Copyright &copy; 2020 <strong>www.branddog.com</strong>. All rights reserved.</p>
+    <p class="pageTop"><a href=".navbar-header" title="화면 최상단으로 이동하기"></a></p>
 	</footer>
 </body>
 </html>

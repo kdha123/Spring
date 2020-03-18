@@ -1,6 +1,8 @@
 package com.webjjang.reply.sevice;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class ReplyServiceImpl implements ReplyService {
 	private ReplyMapper mapper;
 	
 	@Override
-	public List<ReplyDTO> list(PageObject pageObject) {
+	public List<ReplyDTO> list(PageObject pageObject, int no) {
 		// TODO Auto-generated method stub
 		// 페이지 정보를 계산하는 메서드 호출
 		pageObject.calcuPageInfo();
@@ -35,7 +37,10 @@ public class ReplyServiceImpl implements ReplyService {
 		System.out.println("ReplyServiceImpl.list().pageObject : "+pageObject);
 //		log.info(mapper.list(pageObject));
 		log.info("list");
-		return mapper.list(pageObject);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pageObject", pageObject);
+		map.put("no", no);
+		return mapper.list(map);
 	}
 
 	@Override

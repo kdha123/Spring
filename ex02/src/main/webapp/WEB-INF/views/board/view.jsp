@@ -16,6 +16,30 @@
 // 댓글 객체 - 속성, 함수
 var replyService = (function(){
 
+	// 댓글 등록 처리 함수 선언 add
+	function add(reply, callback, error){
+		// ajax를 이용해서 데이터 넘기기 처리 - load(), $.getJSON, $.ajax()
+		$.ajax({
+			type: 'post',
+			url : '/reply/new',
+			// data : ?뒤에 쿼리를 의미 k=v&&k=v  : JSON.stringify(json)로 변환
+			data : JSON.stringify(reply),
+			contentType : "application/json; charset=utf-8",
+			// 등록이 성공했을 때 처리 -> 댓글 리스트를 다시 불러와서 표시한다.
+			success : function(result, status, xhr){
+				if(callback){
+					callback(result);
+					}
+				},
+				// 등록 오류가 발생된 경우 처리
+			error : function(xhr, status, er){
+				if (error){
+					error(er);
+					}
+				}
+				});
+	}
+	
 	// getList를 저장하는 프로그램 작성 -> 필요한 데이터 param(no, page), callback-처리되는 함수, error-오류가 났을때 객체
 	function getList(param, callback, error){
 		var no = param.no;
@@ -57,6 +81,7 @@ var replyService = (function(){
 	
 	return {
 		// 댓글 리스트가 처리되 결과를 만들어 내는 함수
+		add : add,
 		getList : getList,
 		displayDate : displayDate
 	}
@@ -102,7 +127,44 @@ $(function(){
 			}
 		);
 	}
-	
+
+	// 댓글 처리에 대한 이벤트 처리
+	// 댓글 달기 버튼 처리 -> 모달 창을 보이게 한다.
+	$("#writeReplyBtn").click(function(){
+		// 댓글 등록으로 제목과 버튼 이름을 바꿔야한다.
+		$("#updateReplyTitle").text("댓글 등록");
+		// 수정버튼을 등록으로 바꿔야한다.
+		$("#updateModal_updateBtn").text("등록");
+		// 모달창을 보여주자.
+		$("#updateModal").modal("show");
+	});
+
+	// 댓글등록 버튼 클릭 이벤트 -> 폼의 데이터를 넘기는 이벤트
+	$("#modal_form").submit(function(){
+		//Ajax로 넘길 데이터를 가져온다.
+		var reply ={
+			no: ${dto.no},
+			content: $("#modal_content").val(),
+			writer: $("#modal_writer").val(),
+			pw : $("#modal_pw").val()
+		}
+		alert(JSON.stringify(reply));
+		replyService.add(
+			reply,
+			function(result){
+				// 결과를 경고창으로 보여준다. -> ReplyController에서 리턴해준다.
+				alert(result);
+				// 사용을 한 모달창의 입력란을 비워둔다.
+				$("#updateModel").find("input, textarea").val("");
+				// 댓글 리스트를 다시 뿌린다.
+				showList(1);
+			}
+		);
+		//submit을 무시시킨다. -> Ajax 처리를 하기 위해서
+		return false;
+	});
+
+	// 게시판 글보기의 이벤트 처리
 	$("#deleteBtn").click(function(){
 		$("#pwDiv").show();
 		// href="" -> 자신을 다시 호출한다. => false : 호출하는 것을 무시
@@ -181,6 +243,7 @@ $(function(){
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<i class="fa fa-comments fa-fw"></i> Reply
+						<button id="writeReplyBtn" class="btn btn-primary btn-xs pull-right">New Reply</button>
 					</div>
 					<div class="panel-body">
 						<ul class="chat">
@@ -203,6 +266,54 @@ $(function(){
 			</td>
 		</tr>
 	</table>
-<!-- </div> -->
+	  <!-- 댓글 달기와 수정을 위한 Modal -->
+  <div class="modal fade" id="updateModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-pencil"></span> <span id="updateReplyTitle">댓글 수정</span></h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form" method="post" id="modal_form">
+          	<input type="hidden" name="rno" id="modal_rno">
+            <input name="no" type="hidden" value="${dto.no }" />
+			<input name="page" type="hidden" value="${param.page }" />
+			<input name="perPageNum" type="hidden" value="${param.perPageNum }" />
+            <div class="form-group">
+              <label for="modal_content">
+                <span class="glyphicon glyphicon-calendar"></span>
+               	내용
+              </label>
+              <textarea class="form-control" id="modal_content" name="content"
+               rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="modal_content">
+                <span class="glyphicon glyphicon-user"></span>
+               	작성자
+              </label>
+              <input class="form-control" id="modal_writer" name="writer">
+            </div>
+            <div class="form-group">
+              <label for="modal_content">
+                <span class="fa fa-key"></span>
+               	비밀번호
+              </label>
+              <input class="form-control" id="modal_pw" name="pw">
+              <div>본인 댓글 확인 비밀번호입니다.</div>
+            </div>
+            <div class="btn-group right">
+             <button type="submit" class="btn btn-primary"
+              id="updateModal_updateBtn">수정</button>
+          	 <button type="button" class="btn btn-warning" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 취소</button>
+			</div> 
+          </form>
+        </div>
+    </div>
+  </div> 
+</div>
 </body>
 </html>

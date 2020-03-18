@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,6 @@ public class ReplyController {
 	@Autowired
 	@Qualifier("rs")
 	private ReplyService replyService;
-	private final String module = "reply";
 	
 	//1. 댓글 리스트
 	@GetMapping("/pages/{no}/{page}")
@@ -44,15 +44,18 @@ public class ReplyController {
 		// DB에서 데이터 가져오기 -> 페이지 계산, JSP에서 표시할 페이지네이션 정보가 계산된다.
 //		model.addAttribute("list", replyService.list(pageObject));
 //		model.addAttribute("pageObject", pageObject);
-		return new ResponseEntity<>(replyService.list(pageObject), HttpStatus.OK);
+		return new ResponseEntity<>(replyService.list(pageObject, no), HttpStatus.OK);
 	}
 
 	//2. 댓글 글쓰기 처리
-	@PostMapping("/write.do")
-	public String write(ReplyDTO dto) {
+	@PostMapping(value="/new", consumes="application/json",produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> write(ReplyDTO dto) {
 		// /WEB-INF/views/ + reply + /list + .jsp
-		replyService.write(dto);
-		return "redirect:list.do";
+		log.info(dto);
+		Integer insertCount = replyService.write(dto);
+		return insertCount == 1
+				? new ResponseEntity<>("댓글이 등록되었습니다.",HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	//3. 댓글 글수정 처리 - 전체 데이터

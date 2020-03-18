@@ -10,7 +10,7 @@ import com.webjjang.util.page.PageObject;
 public interface ReplyService {
 	
 	// 1.리스트 - list()
-	public List<ReplyDTO> list(PageObject pageObject);
+	public List<ReplyDTO> list(PageObject pageObject, int no);
 	// 2.댓글 등록 처리 - write(dto)
 	public Integer write(ReplyDTO dto);
 	// 3.댓글 수정 처리 - update(dto)

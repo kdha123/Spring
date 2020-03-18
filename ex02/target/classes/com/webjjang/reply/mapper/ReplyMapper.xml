@@ -13,9 +13,10 @@
 		from (
 		select rno, no, content, writer, writeDate
 		from board_rep
-		order by no desc
+		where no = #{no}
+		order by rno desc
 		)
-		) where rnum between #{startRow} and #{endRow}
+		) where rnum between #{pageObject.startRow} and #{pageObject.endRow}
 
 	</select>
 	<select id="getTotalRow" resultType="java.lang.Integer">

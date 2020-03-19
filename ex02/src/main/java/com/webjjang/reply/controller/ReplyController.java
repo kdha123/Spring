@@ -5,13 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.webjjang.reply.dto.ReplyDTO;
@@ -48,26 +49,34 @@ public class ReplyController {
 	}
 
 	//2. 댓글 글쓰기 처리
-	@PostMapping(value="/new", consumes="application/json",produces= {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> write(ReplyDTO dto) {
+	// consumes : 전달되는 데이터 지정
+	// produces : 돌려주는 값에 대한 데이터 설정
+	@PostMapping(value="/new", consumes="application/json",produces= "application/text; charset=utf-8")
+	public ResponseEntity<String> write(@RequestBody ReplyDTO dto) {
 		// /WEB-INF/views/ + reply + /list + .jsp
 		log.info(dto);
-		Integer insertCount = replyService.write(dto);
-		return insertCount == 1
-				? new ResponseEntity<>("댓글이 등록되었습니다.",HttpStatus.OK)
-				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		try {
+			replyService.write(dto);
+			return new ResponseEntity<>("댓글이 등록되었습니다.",HttpStatus.OK);
+		
+		}catch(Exception e){
+			return new ResponseEntity<>("댓글 등록 중 오류가 발생하였습니다.\\n"+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	//3. 댓글 글수정 처리 - 전체 데이터
-	@PostMapping("/update.do")
-	public String update(ReplyDTO dto) {
+	@RequestMapping(value="/{rno}", consumes="application/json",produces= "application/text; charset=utf-8", method = RequestMethod.PATCH)
+	public ResponseEntity<String>update(@RequestBody ReplyDTO dto, @PathVariable int rno) {
+		dto.setRno(rno);
+		log.info("------------------"+dto);
 		int result = replyService.update(dto);
 		// return 값이 Integer로 넘어오기 때문에 0일 경우 처리가 안된 것.
 		if(result > 0) {
-			return "redirect:view.do?no=" + dto.getNo();
+			// 수정이 정상적으로 된 경우
+			return new ResponseEntity<>("댓글이 수정되었습니다.",HttpStatus.OK);
 		}else {
-			// 오류 보여주는 페이지로 이동 -> 수정이 정상적으로 안된 경우 : 비밀번호가 틀림
-			return "error/error_pw";
+			// 수정이 정상적으로 안된 경우 : 비밀번호가 틀림
+			return new ResponseEntity<>("댓글 수정 중 오류가 발생하였습니다.\\n",HttpStatus.NOT_ACCEPTABLE);
 		}
 		// /WEB-INF/views/ + reply + /list + .jsp
 		
